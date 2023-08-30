@@ -3,13 +3,22 @@ function Get-GPOWsusInfo {
     foreach ($Policy in $GPO) {
         $GPOID = $Policy.Id
         $GPODisp = $Policy.DisplayName
-        [xml]$xml = Get-GPOReport -Id $GPOID -ReportType xml -ErrorAction SilentlyContinue
+
+        [xml]$xml = $null
+        $WSUSServer = $null
+
+        $xml = Get-GPOReport -Id $GPOID -ReportType xml -ErrorAction SilentlyContinue
         $WSUSBase = Get-GPRegistryValue -Guid $GPOID -Key 'HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate' -ErrorAction SilentlyContinue
-        $WSUSServer = if ($WSUSBase) { ($WSUSBase | Where-Object { $_.ValueName -eq 'WUServer' }).Value }
-        
-        [PSCustomObject]@{
-            GPOName = $GPODisp
-            WSUSServer = $WSUSServer
+
+        if ($WSUSBase) {
+            $WSUSServer = ($WSUSBase | Where-Object { $_.ValueName -eq 'WUServer' }).Value
+        }
+
+        if ($GPODisp -and $WSUSServer) {
+            [PSCustomObject]@{
+                GPOName = $GPODisp
+                WSUSServer = $WSUSServer
+            }
         }
     }
 }
