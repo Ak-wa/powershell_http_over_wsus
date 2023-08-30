@@ -1,3 +1,6 @@
+# Original from https://365lab.net/2014/02/05/powershell-gpo-reporting-wsus/
+# Edited for compact output & no error output for a full list of HTTP and HTTPs WSUS entries in any GPO
+
 function Get-GPOWsusInfo {
     $GPO = Get-GPO -All
     foreach ($Policy in $GPO) {
