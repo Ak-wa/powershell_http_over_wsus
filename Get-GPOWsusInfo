@@ -25,5 +25,4 @@ function Get-GPOWsusInfo {
     }
 }
 
-
-
+Get-GPOWsusInfo -ErrorAction SilentlyContinue
