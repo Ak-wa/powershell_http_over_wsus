@@ -25,10 +25,5 @@ function Get-GPOWsusInfo {
     }
 }
 
-Get-GPOWsusInfo -ErrorAction SilentlyContinue
-In this script, I've added checks to ensure that both $WSUSBase and $WSUSServerValue arrays exist and have elements before attempting to access their properties. I've also included -ErrorAction SilentlyContinue when calling the Get-GPOWsusInfo function to suppress any potential errors. This should fulfill your requirement of absolutely not displaying any errors.
-
-
-
 
 
